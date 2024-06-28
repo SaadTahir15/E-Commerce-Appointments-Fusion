@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer View</title>
+    <link rel="stylesheet" href="/styles/customerView.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-logo">Customer View</div>
+      <span class="navbar-welcome">Welcome, <%= userData.fullName %></span>
+      <div class="navbar-links">
+        <a href="/services" class="navbar-link">Service</a>
+        <a href="/products" class="navbar-link">Products</a>
+        <a href="/signout" class="signout">Sign Out</a>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="button" onclick="showDetails('data1')">
+        General Info
+      </button>
+      <button class="button" onclick="showDetails('data2')">
+        Account Info
+      </button>
+      <button class="button" onclick="showDetails('data3')">
+        Services Taken
+      </button>
+      <button class="button" onclick="showDetails('data4')">
+        Products Bought
+      </button>
+    </div>
+
+    <div class="details-container">
+      <div id="data1" class="details active">
+        <h2>General Details</h2>
+        <p><%= userData.fullName %></p>
+        <p><%= userData.phone %></p>
+        <p><%= userData.address %></p>
+      </div>
+      <div id="data2" class="details">
+        <h2>Account Details</h2>
+        <p><%= userData.email %></p>
+        <p><%= userData.password %></p>
+      </div>
+
+      <!-- Additional div for Services Taken -->
+      <div id="data3" class="details">
+        <h2>Services Taken</h2>
+        <% if (servicesData && servicesData.length > 0) { %>
+        <ul>
+          <% for (const serviceData of servicesData) { %>
+          <li>
+            <%= serviceData.services %> on <%= serviceData.Day %> by <%=
+            serviceData.mechanicName %> <% if (serviceData.received &&
+            !serviceData.reviewed) { %>
+            <button
+              id="writeReviewButton_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+              onclick="showReviewForm('<%= serviceData.S_id %>', '<%= serviceData.M_id %>', '<%= serviceData.Day %>')"
+            >
+              Write a Review
+            </button>
+            <div
+              id="reviewForm_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+              class="review-form"
+              style="display: none"
+            >
+              <form action="/submitReview" method="POST">
+                <input
+                  type="hidden"
+                  name="S_id"
+                  value="<%= serviceData.S_id %>"
+                />
+                <input
+                  type="hidden"
+                  name="M_id"
+                  value="<%= serviceData.M_id %>"
+                />
+                <!-- Add a hidden input for serviceData.Day -->
+                <input
+                  type="hidden"
+                  name="Day"
+                  value="<%= serviceData.Day %>"
+                />
+                <label
+                  for="rating_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+                  >Rating:</label
+                >
+                <select
+                  id="rating_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+                  name="rating"
+                  required
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <br />
+                <label
+                  for="comment_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+                  >Comment:</label
+                >
+                <textarea
+                  id="comment_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+                  name="comment"
+                  rows="4"
+                  cols="50"
+                  required
+                ></textarea>
+                <br />
+                <button type="submit">Submit Review</button>
+              </form>
+            </div>
+            <% } %>
+            <!-- Mark as Received button -->
+            <% if (!serviceData.received) { %>
+            <button
+              id="markServiceReceivedButton_<%= serviceData.S_id %>_<%= serviceData.M_id %>_<%= serviceData.Day %>"
+              onclick="markServiceAsReceived('<%= serviceData.S_id %>', '<%= serviceData.M_id %>', '<%= serviceData.Day %>')"
+            >
+              Mark as Received
+            </button>
+            <% } %>
+          </li>
+          <% } %>
+        </ul>
+        <% } else { %>
+        <p>No services taken yet.</p>
+        <% } %>
+      </div>
+
+      <!-- Additional div for Products Bought -->
+      <div id="data4" class="details">
+        <h2>Products Bought</h2>
+        <!-- Display products or a message -->
+        <% if (ordersData && ordersData.length > 0) { %>
+        <ul>
+          <% for (const product of ordersData) { %>
+          <li>
+            <%= product.name %> - <%= product.quantity %> units
+            <!-- Display "Mark as Received" button only if the product is not received -->
+            <% if (!product.received) { %>
+            <button onclick="markAsReceived('<%= product.P_id %>')">
+              Mark as Received
+            </button>
+            <% } %>
+          </li>
+          <% } %>
+        </ul>
+        <% } else { %>
+        <p>No products bought yet.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <script>
+      function showDetails(dataId) {
+        const detailsElements = document.querySelectorAll(".details");
+        detailsElements.forEach((element) => {
+          element.classList.remove("active");
+        });
+
+        const selectedDetails = document.getElementById(dataId);
+        if (selectedDetails) {
+          selectedDetails.classList.add("active");
+        }
+      }
+
+      function showReviewForm(S_id, M_id, Day) {
+        const reviewForm = document.getElementById(
+          `reviewForm_${S_id}_${M_id}_${Day}`
+        );
+        if (reviewForm) {
+          reviewForm.style.display = "block";
+        }
+      }
+
+      async function markAsReceived(P_id) {
+        try {
+          const response = await fetch(`/mark-as-received/${P_id}`, {
+            method: "POST",
+          });
+
+          // Check if the response has a successful status
+          if (response.ok) {
+            try {
+              const data = await response.json();
+
+              // Check if the response contains the expected properties
+              if (data && data.success) {
+                // Update the UI accordingly
+                const receivedButton = document.querySelector(
+                  `button[onclick="markAsReceived('${P_id}')"]`
+                );
+                if (receivedButton) {
+                  // Hide the button
+                  receivedButton.style.display = "none";
+                }
+              } else {
+                console.error(
+                  "Invalid response format or unsuccessful operation:",
+                  data
+                );
+              }
+            } catch (jsonError) {
+              console.error("Error parsing JSON:", jsonError);
+            }
+          } else {
+            console.error("Server returned an error:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error marking product as received:", error);
+        }
+      }
+
+      async function markServiceAsReceived(S_id, M_id, Day) {
+        try {
+          const response = await fetch(
+            `/mark-service-as-received/${S_id}/${M_id}/${Day}`,
+            {
+              method: "POST",
+            }
+          );
+
+          if (response.ok) {
+            // Update the UI accordingly
+            const buttonId = `markServiceReceivedButton_${S_id}_${M_id}_${Day}`;
+            const button = document.getElementById(buttonId);
+
+            if (button) {
+              // Hide the button
+              button.style.display = "none";
+              console.log("Button hidden successfully");
+            }
+          } else {
+            console.error("Server returned an error:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error marking service as received:", error);
+        }
+      }
+    </script>
+  </body>
+</html>

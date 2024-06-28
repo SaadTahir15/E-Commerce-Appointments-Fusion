@@ -1,0 +1,166 @@
+/* Updated Styles for Services Page */
+body {
+    margin: 0;
+    max-width: 100%;
+    background: linear-gradient(135deg, #eef5ff, #fff); /* Gradient Background */
+    font-family: "Poppins", sans-serif;
+    color: #333;
+  }
+  
+  .navbar {
+    background-color: #183d3d;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navbar-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .navbar-link:hover {
+    color: #3498db;
+  }
+  
+  .signout {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 20px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .signout:hover {
+    color: #3498db;
+  }
+  
+  .service-card {
+    background: linear-gradient(135deg, #eef5ff, #cbe0d9); /* Gradient Background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Updated to vertical direction */
+    align-items: center;
+    text-align: center; /* Center-align text */
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .service-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .service-price {
+    margin-top: 10px;
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  .form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #eef5ff, #93B1A6); /* Gradient Background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Updated Form Styling */
+  form {
+    display: grid;
+    gap: 20px;
+  }
+  
+  label {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  input,
+  select {
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .select-wrapper {
+    position: relative;
+  }
+  
+  .select-wrapper::after {
+    content: "\25BC";
+    font-size: 20px;
+    color: #555;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
+  .select-wrapper select {
+    appearance: none;
+    background: transparent;
+    width: 100%;
+  }
+  
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .checkbox-label input {
+    margin-right: 8px;
+  }
+  
+  button {
+    background-color: #183d3d;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="styles/checkout.css" />
+  </head>
+
+  <body>
+    <div class="checkout-container">
+      <h1>Order Summary</h1>
+
+      <div class="order-details">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cart.forEach(item => { %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= item.description %></td>
+              <td>$<%= item.price %></td>
+              <td><%= item.quantity %></td>
+              <td>$<%= (item.price * item.quantity).toFixed(2) %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+
+        <div class="total-amount">
+          <!-- Display the total amount from the server -->
+          <p>Total: $<%= totalPrice %></p>
+        </div>
+      </div>
+
+      <h2>Order Confirmation</h2>
+      <form action="/checkout" method="POST">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <textarea id="address" name="address" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="payment">Payment Details:</label>
+          <input type="text" id="payment" name="payment" required />
+        </div>
+
+        <!-- Add more fields as needed for order confirmation -->
+
+        <button type="submit">Confirm Order</button>
+      </form>
+
+      <!-- Cancel Order button -->
+      <!-- <a href="/cancel-order" class="cancel-order-btn">Cancel Order</a> -->
+      <!-- Go back to Cart button -->
+      <a href="/cart" class="cancel-order-btn">Go Back to Cart</a>
+    </div>
+  </body>
+</html>

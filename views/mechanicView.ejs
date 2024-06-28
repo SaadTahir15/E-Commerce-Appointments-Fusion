@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mechanic View</title>
+    <!-- Add your CSS styling here -->
+    <link rel="stylesheet" href="/styles/mechanicView.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-logo">Mechanic View</div>
+      <span class="navbar-welcome">Welcome, <%= userData.fullName %></span>
+      <div class="navbar-links">
+        <a href="/signout" class="signout">Sign Out</a>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="button" onclick="showDetails('data1')">
+        General Info
+      </button>
+      <button class="button" onclick="showDetails('data2')">
+        Account Info
+      </button>
+      <button class="button" onclick="showMechanicServices()">
+        Mechanic Services
+      </button>
+    </div>
+
+    <div class="details-container">
+      <div id="data1" class="details">
+        <h2>General Details</h2>
+        <p><%= userData.fullName %></p>
+        <p><%= userData.phone %></p>
+        <p><%= userData.skill %></p>
+        <p><%= userData.experience %></p>
+        <p><%= userData.address %></p>
+      </div>
+      <div id="data2" class="details">
+        <h2>Account Details</h2>
+        <p><%= userData.email %></p>
+        <p><%= userData.password %></p>
+      </div>
+      <div id="data3" class="details">
+        <h2>Mechanic Services</h2>
+        <ul>
+          <% if (mechanicServicesData && mechanicServicesData.length > 0) { %>
+          <% for (const serviceData of mechanicServicesData) { %>
+          <li>
+            <%= serviceData.services %> on <%= serviceData.Day %> for <%=
+            serviceData.customerName %>
+          </li>
+          <% } %> <% } else { %>
+          <p>No services given or to be given yet.</p>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      function showDetails(dataId) {
+        // Hide all details
+        const detailsElements = document.querySelectorAll(".details");
+        detailsElements.forEach((element) => {
+          element.classList.remove("active");
+        });
+
+        // Show the selected details
+        const selectedDetails = document.getElementById(dataId);
+        if (selectedDetails) {
+          selectedDetails.classList.add("active");
+        }
+      }
+
+      function showMechanicServices() {
+        const mechanicServices = document.getElementById("data3");
+        if (mechanicServices) {
+          mechanicServices.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>

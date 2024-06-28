@@ -1,0 +1,104 @@
+/* Home.css */
+body {
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+    background-color: #EEF5FF;
+    font-family: "Arial", sans-serif;
+}
+
+.welcome {
+    background-color: #183D3D;
+    height: 60px;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    text-align: center;
+}
+h1 {
+    color: antiquewhite;
+    text-align: center;
+    margin: 0; /* Remove default margin */
+}
+
+.img1 {
+    height: 800px;
+    position: absolute;
+    left: 37%;
+    margin: 0;
+}
+
+.mText {
+    position: absolute;
+    height: 200px;
+    width: 700px;
+    top: 15%;
+    left: 1%;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out 0.5s forwards;
+}
+
+.mText > h1 {
+    color: #183D3D;
+    position: absolute;
+}
+
+/* Updated styles for individual login buttons */
+.loginBtn {
+    position: absolute;
+    bottom: 35%;
+    left: 22%;
+    transform: translateY(100%);
+    animation: slideIn 1s ease-in-out 0.5s forwards;
+}
+
+.cusLogin,
+.mecLogin {
+    display: inline-block;
+    background-color: #183D3D;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: 8px;
+    margin: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.cusLogin a,
+.mecLogin a {
+    text-decoration: none;
+    color: #93B1A6;
+    transition: color 0.3s ease-in-out;
+}
+
+.cusLogin:hover,
+.mecLogin:hover {
+    background-color: #154033;
+    cursor: pointer;
+}
+
+.cusLogin a:hover,
+.mecLogin a:hover {
+    color: antiquewhite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

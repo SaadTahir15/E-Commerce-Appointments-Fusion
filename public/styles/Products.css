@@ -1,0 +1,137 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #eef5ff;
+}
+
+/* Navigation bar styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #183d3d;
+  color: #fff;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+.signout {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  background-color: #93b1a6;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Shopping cart styles */
+.shop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.item {
+  background: linear-gradient(135deg, #eef5ff, #cbe0d9) ;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.item img {
+  max-width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+  border-radius: 5px 5px 0 0;
+}
+
+.details {
+  padding: 20px;
+}
+
+.price-quan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.price-quan h2 {
+  color: #183d3d;
+  margin: 0;
+}
+
+.description {
+  color: #555;
+}
+
+/* Quantity controls styles */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+label {
+  margin-right: 10px;
+  color: #183d3d;
+}
+
+.quantity-controls input {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+/* Add to Cart button styles */
+.buttons {
+  margin-top: 10px;
+}
+
+form {
+  display: inline-block;
+}
+
+input[type="submit"] {
+  background-color: #183d3d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #93b1a6;
+}
+
+/* Empty cart message styles */
+.empty-cart {
+  text-align: center;
+  padding: 20px;
+}
+

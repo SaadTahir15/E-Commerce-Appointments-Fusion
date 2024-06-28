@@ -1,0 +1,85 @@
+<!-- Customer.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Panel</title>
+    <link rel="stylesheet" href="./styles/login_signup.css" />
+  </head>
+  <body>
+    <div class="panel">
+      <!-- <div class="tab" onclick="showTab('loginTab')">Login</div> -->
+      <div class="tab" onclick="showTab('signupTab')">Sign Up</div>
+      <button onclick="goToAdminPanel()" class="input-group-button">
+        Admin Panel
+      </button>
+
+      <div id="loginTab" class="tab-content">
+        <form action="/login" method="post">
+          <div class="input-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="input-group">
+            <label for="userType">User Type:</label>
+            <select id="userType" name="userType" required>
+              <option value="customer">Customer</option>
+              <option value="mechanic">Mechanic</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="signupTab" class="tab-content">
+        <form action="/signup" method="post">
+          <div class="input-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+          <div class="input-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="input-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+          <div class="input-group">
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required></textarea>
+          </div>
+          <div class="input-group">
+            <button type="submit">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function showTab(tabId) {
+        document.getElementById("loginTab").style.display =
+          tabId === "loginTab" ? "block" : "none";
+        document.getElementById("signupTab").style.display =
+          tabId === "signupTab" ? "block" : "none";
+      }
+
+      function goToAdminPanel() {
+        // Redirect to the Admin Panel URL
+        window.location.href =
+          "http://localhost:81/phpmyadmin/index.php?route=/";
+      }
+    </script>
+  </body>
+</html>

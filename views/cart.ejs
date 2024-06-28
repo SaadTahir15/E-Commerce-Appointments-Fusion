@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="styles/cart.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div></div>
+      <div class="navbar-links">
+        <a href="/services" class="navbar-link">Service</a>
+        <a href="/products" class="navbar-link">Products</a>
+        <a href="/cart" class="navbar-link">Cart</a>
+        <a href="/signout" class="signout">Sign Out</a>
+      </div>
+    </div>
+
+    <h1>Shopping Cart</h1>
+
+    <div class="cart-items">
+      <% if (cart && cart.length > 0) { %> <% let totalPrice = 0; %> <%
+      cart.forEach(item => { %>
+      <div class="cart-item" data-product-id="<%= item.pid %>">
+        <!-- Display product details -->
+        <span class="cart-item-img"
+          ><img width="233" src="<%= item.image_path %>"
+        /></span>
+        <span class="cart-item-detail">
+          <strong>Name:</strong> <%= item.name %><br />
+          <strong>Description:</strong> <%= item.description %><br />
+          <strong>Price:</strong> <%= item.price %><br />
+          <strong>Total:</strong> $<%= (item.price * item.quantity).toFixed(2)
+          %><br />
+          <strong>Quantity:</strong>
+          <button
+            class="quantity-btn"
+            data-action="decrease"
+            data-pid="<%= item.pid %>"
+          >
+            -
+          </button>
+          <%= item.quantity %>
+          <button
+            class="quantity-btn"
+            data-action="increase"
+            data-pid="<%= item.pid %>"
+          >
+            +
+          </button>
+        </span>
+        <!-- Quantity controls -->
+        <form action="/removeFromCart/<%= item.pid %>" method="POST">
+          <button class="remove-item-btn" type="submit">Remove</button>
+        </form>
+      </div>
+      <% totalPrice += item.price * item.quantity; %> <% }); %>
+      <!-- Checkout button -->
+      <a
+        href="/checkout?totalPrice=<%= totalPrice.toFixed(2) %>"
+        class="checkout-btn"
+        >Checkout<span>$<%= totalPrice.toFixed(2) %></span></a
+      >
+      <% } else { %>
+      <p class="empty-cart-message">Your cart is empty.</p>
+      <% } %>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".quantity-btn").click(function () {
+          const productId = $(this).data("pid");
+          const action = $(this).data("action");
+          updateQuantity(productId, action);
+        });
+
+        function updateQuantity(productId, action) {
+          $.ajax({
+            url: `/updateQuantity/${action}/${productId}`,
+            type: "POST",
+            success: function (data) {
+              if (data.success) {
+                // Update the UI with the new quantity
+                const quantityElement = $(
+                  `.cart-item[data-product-id="${productId}"] .cart-item-detail strong:contains('Quantity')`
+                );
+                if (quantityElement) {
+                  quantityElement
+                    .next()
+                    .text(
+                      ` ${
+                        data.cart.find((item) => item.pid === productId)
+                          .quantity
+                      }`
+                    );
+                  // Update the total price for the item
+                  const totalPriceElement = $(
+                    `.cart-item[data-product-id="${productId}"] .cart-item-detail strong:contains('Total')`
+                  );
+                  if (totalPriceElement) {
+                    totalPriceElement.text(
+                      `Total: $${(item.price * item.quantity).toFixed(2)}`
+                    );
+                  }
+                }
+              }
+            },
+            error: function (error) {
+              console.error(error);
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
