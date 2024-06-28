@@ -16,5 +16,3 @@ Thumbs.db
 # Database files
 *.sqlite
 *.db
-
-secrets.env
