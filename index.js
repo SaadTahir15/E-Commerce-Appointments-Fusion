@@ -13,10 +13,10 @@ const port = 3000;
 
 // Create a MySQL connection pool
 const pool = createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "dbproject",
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
   connectionLimit: 10,
 });
 
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET, // Change this to a secret key
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
